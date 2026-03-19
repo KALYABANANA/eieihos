@@ -1,6 +1,7 @@
 'use client';
 
 import { useRef, useState, useCallback, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 
 interface AnalysisResult {
   success: boolean;
@@ -17,6 +18,7 @@ interface AnalysisResult {
 }
 
 export default function Home() {
+  const router = useRouter();
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [isStreaming, setIsStreaming] = useState(false);
@@ -649,11 +651,42 @@ export default function Home() {
                 borderRadius: '10px',
                 display: 'flex',
                 justifyContent: 'space-between',
-                alignItems: 'center'
+                alignItems: 'center',
+                marginBottom: '16px'
               }}>
                 <span style={{ fontSize: '0.85rem', color: colors.textLight }}>Landmarks Detected</span>
                 <span style={{ fontSize: '1.1rem', fontWeight: '700', color: colors.primary }}>{result.data.landmarks_count}</span>
               </div>
+
+              {/* Navigation Button to Result Page */}
+              {scanStatus === 'success' && (
+                <button
+                  onClick={() => router.push('/result')}
+                  style={{
+                    width: '100%',
+                    padding: '14px 20px',
+                    background: `linear-gradient(135deg, ${colors.success} 0%, #1B5E20 100%)`,
+                    color: 'white',
+                    border: 'none',
+                    borderRadius: '10px',
+                    fontSize: '1rem',
+                    fontWeight: '600',
+                    cursor: 'pointer',
+                    boxShadow: '0 4px 15px rgba(46, 125, 50, 0.3)',
+                    transition: 'transform 0.2s, box-shadow 0.2s'
+                  }}
+                  onMouseOver={(e) => {
+                    (e.currentTarget as HTMLButtonElement).style.transform = 'translateY(-2px)';
+                    (e.currentTarget as HTMLButtonElement).style.boxShadow = '0 6px 20px rgba(46, 125, 50, 0.4)';
+                  }}
+                  onMouseOut={(e) => {
+                    (e.currentTarget as HTMLButtonElement).style.transform = 'translateY(0)';
+                    (e.currentTarget as HTMLButtonElement).style.boxShadow = '0 4px 15px rgba(46, 125, 50, 0.3)';
+                  }}
+                >
+                  View Full Results / ดูผลลัพธ์เต็ม →
+                </button>
+              )}
             </>
           )}
         </div>
