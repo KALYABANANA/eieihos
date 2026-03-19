@@ -39,7 +39,7 @@ app.add_middleware(
 )
 
 # Model paths
-MODEL_DIR = os.path.join(os.path.dirname(__file__), "..", "models")
+MODEL_DIR = os.path.join(os.path.dirname(__file__), "models")
 AU_MODEL_PATH = os.path.join(MODEL_DIR, "AU_200.tflite")
 FACE_LANDMARKER_PATH = os.path.join(MODEL_DIR, "face_landmarker.task")
 
